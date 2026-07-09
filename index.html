@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gourab Nath | Advanced Portfolio</title>
+<link rel="icon" type="image/png" href="cropped_circle_image.png">
+<meta name="description" content="Gourab Nath — Statistician, Indian Statistical Institute, Kolkata. Official statistics, survey methodology, PLFS, CPI, WPI, ASI, NFHS.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<style>
+/* =========================================================
+   SYSTEM DESIGN SYSTEM & THEME TOKENS
+========================================================= */
+:root {
+  --bg-core: #030712;
+  --bg-surface: #0b1329;
+  --bg-panel: #111d37;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  
+  /* Neon Accents */
+  --neon-cyan: #06b6d4;
+  --neon-emerald: #10b981;
+  --neon-gold: #f59e0b;
+  --neon-glow: rgba(6, 182, 212, 0.15);
+  
+  --line-grid: rgba(255, 255, 255, 0.03);
+  --line-border: rgba(255, 255, 255, 0.08);
+  --line-active: rgba(6, 182, 212, 0.4);
+  
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fluid: all 0.5s var(--ease-out-expo);
+}
+
+/* =========================================================
+   GLOBAL RESET & STRUCTURE
+========================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-core); }
+body {
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  background-color: var(--bg-core);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Live Animated Data Grid Background Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(var(--line-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 100%);
+  animation: gridPan 20s linear infinite;
+}
+
+@keyframes gridPan {
+  from { background-position: 0 0; }
+  to { background-position: 40px 40px; }
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+section { padding: 140px 0 80px; position: relative; }
+
+/* =========================================================
+   GRAPHIC DESIGN ENHANCEMENTS & BRANDING ELEMENTS
+========================================================= */
+.block-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  background: rgba(6, 182, 212, 0.06);
+  border: 1px solid var(--line-active);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+}
+.block-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+  border-radius: 50%;
+}
+
+.section-head { max-width: 700px; margin: 0 auto 70px; }
+.section-head.left { margin-left: 0; text-align: left; }
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+.section-sub { color: var(--text-secondary); font-size: 1.05rem; }
+
+/* Interactive High-Tech Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, var(--neon-cyan), #0891b2);
+  color: var(--bg-core);
+  padding: 16px 34px;
+  border-radius: var(--radius-md);
+  font-weight: 700; font-size: 0.95rem;
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+  transition: var(--transition-fluid);
+  border: none; cursor: pointer;
+}
+.btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.5);
+}
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #fff;
+  border: 1px solid var(--line-border);
+  padding: 15px 32px;
+  border-radius: var(--radius-md);
+  font-weight: 600; font-size: 0.95rem;
+  backdrop-filter: blur(8px);
+  transition: var(--transition-fluid);
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #fff;
+  transform: translateY(-4px);
+}
+
+/* Glassmorphic Animated Cards */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-border);
+  border-radius: var(--radius-md);
+  padding: 40px;
+  box-shadow: 0 8px 32 rgba(0, 0, 0, 0.3);
+  transition: var(--transition-fluid);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--radius-md);
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, var(--line-border), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  transition: var(--transition-fluid);
+}
+.card:hover {
+  transform: translateY(-8px) scale(1.01);
+  background: var(--bg-panel);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--neon-glow);
+  border-color: var(--line-active);
+}
+.card:hover::before {
+  background: linear-gradient(135deg, var(--neon-cyan), transparent, var(--neon-gold));
+}
+
+/* Scroll-triggered Reveal Animations */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+.reveal-stagger > * { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
+.reveal-stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.3s; }
+
+/* =========================================================
+   HEADER / NAVIGATION LAYER
+========================================================= */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line-grid);
+  z-index: 1000;
+  transition: var(--transition-fluid);
+}
+header.scrolled {
+  background: var(--bg-core);
+  border-bottom-color: var(--line-border);
+}
+.navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1300px; margin: 0 auto; padding: 24px 5%;
+}
+.logo {
+  font-size: 1.4rem; font-weight: 700; color: #fff;
+  letter-spacing: -0.03em;
+}
+.logo span { color: var(--neon-cyan); }
+.logo small {
+  display: block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-secondary);
+  text-transform: uppercase; margin-top: 2px;
+}
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-secondary); transition: var(--transition-fluid);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-glow); }
+.menu-toggle { display: none; font-size: 1.4rem; cursor: pointer; color: #fff; }
+
+/* =========================================================
+   HERO INTERACTIVE DOMAIN
+========================================================= */
+.hero {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 100vh; gap: 80px; padding-top: 140px;
+}
+.hero-content { flex: 1.2; max-width: 650px; }
+.hero-content h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--neon-gold); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-content h3::before { content: ''; width: 30px; height: 1px; background: var(--neon-gold); }
+.hero-content h1 {
+  font-size: clamp(3rem, 6vw, 5rem); line-height: 1.02;
+  margin-bottom: 20px; letter-spacing: -0.03em;
+}
+.hero-content h1 em { font-style: normal; color: var(--neon-cyan); text-shadow: 0 0 20px var(--neon-glow); }
+.hero-content h2 { font-size: 1.3rem; font-weight: 400; color: var(--text-secondary); margin-bottom: 30px; }
+
+.hero-content .desc {
+  font-size: 1.05rem; border-left: 3px solid var(--neon-cyan);
+  padding-left: 20px; margin-bottom: 40px; color: var(--text-secondary);
+}
+.desc strong { color: #fff; }
+
+.buttons { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
+.social-icons { display: flex; gap: 16px; margin-bottom: 50px; }
+.social-icons a {
+  width: 48px; height: 48px; border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); font-size: 1.1rem; transition: var(--transition-fluid);
+}
+.social-icons a:hover {
+  background: rgba(6, 182, 212, 0.1); color: var(--neon-cyan);
+  border-color: var(--neon-cyan); transform: translateY(-4px);
+}
+
+/* Dynamic Live Ticker Element */
+.index-ticker {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-panel));
+  border: 1px solid var(--line-border);
+  border-radius: var(--radius-md); padding: 24px;
+  max-width: 440px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  position: relative; overflow: hidden;
+}
+.index-ticker::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent);
+  transform: translateX(-100%); animation: sweep 4s linear infinite;
+}
+@keyframes sweep { 100% { transform: translateX(100%); } }
+
+.index-ticker-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.index-ticker-head b {
+  color: var(--neon-emerald); display: flex; align-items: center; gap: 6px;
+}
+.index-ticker-head b::before {
+  content: ''; width: 8px; height: 8px; background: var(--neon-emerald);
+  border-radius: 50%; display: inline-block; animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.2); } }
+
+.index-chart { width: 100%; height: 60px; display: block; }
+.index-path {
+  fill: none; stroke: var(--neon-cyan); stroke-width: 2.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1000; stroke-dashoffset: 1000;
+  animation: drawLine 3s cubic-bezier(0.4, 0, 0.2, 1) forwards infinite;
+}
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+/* Advanced Image Wireframe Framing & Colorful Overrides */
+.hero-image { flex: 0.8; display: flex; justify-content: center; position: relative; }
+.photo-frame { position: relative; width: 360px; height: 440px; }
+.photo-frame .decor-line {
+  position: absolute; border: 1px dashed var(--line-active); z-index: 1;
+}
+.decor-line.v { top: -20px; bottom: -20px; left: 50%; width: 1px; }
+.decor-line.h { left: -20px; right: -20px; top: 50%; height: 1px; }
+
+.photo-box {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #111827, #030712);
+  border-radius: var(--radius-md); overflow: hidden;
+  border: 1px solid rgba(6, 182, 212, 0.3); 
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.15), 0 0 60px rgba(245, 158, 11, 0.1);
+  position: relative; z-index: 2;
+  transition: var(--transition-fluid);
+}
+
+/* KEEPING IMAGE FULLY COLORFUL */
+.photo-box img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  filter: drop-shadow(0px 4px 20px rgba(0,0,0,0.5));
+  transition: var(--transition-fluid); 
+}
+
+.photo-box .initials {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-size: 6rem; color: rgba(255,255,255,0.03);
+}
+
+/* Interaction Glow for Portrait */
+.photo-frame:hover .photo-box {
+  border-color: var(--neon-gold);
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.25), 0 0 80px rgba(6, 182, 212, 0.15);
+  transform: scale(1.02);
+}
+.photo-frame:hover .photo-box img {
+  filter: contrast(104%) saturate(108%);
+}
+
+/* Technical Metrics Strip */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: rgba(11, 19, 41, 0.5); backdrop-filter: blur(12px);
+  border: 1px solid var(--line-border); border-radius: var(--radius-md);
+  max-width: 1200px; margin: 60px auto 0; padding: 30px;
+}
+.stat { text-align: center; border-right: 1px solid var(--line-border); }
+.stat:last-child { border-right: none; }
+.stat .num {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: 2.5rem; color: #fff; line-height: 1.1;
+}
+.stat .num span { color: var(--neon-cyan); }
+.stat .label {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+/* =========================================================
+   COMPLEX ABOUT & GRID ENVIRONMENTS
+========================================================= */
+#about { background: rgba(11, 19, 41, 0.3); border-top: 1px solid var(--line-grid); }
+.about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
+.about-grid p { margin-bottom: 24px; font-size: 1.1rem; color: var(--text-secondary); }
+.about-grid p strong { color: #fff; }
+
+.dataset-panel {
+  background: var(--bg-surface); border: 1px solid var(--line-border);
+  padding: 34px; border-radius: var(--radius-md);
+}
+.dataset-panel h4 {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--neon-gold);
+  margin-bottom: 24px;
+}
+.dataset-panel ul { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.dataset-panel li {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--line-border);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #fff;
+  transition: var(--transition-fluid); text-align: center;
+}
+.dataset-panel li:hover {
+  background: rgba(6, 182, 212, 0.1); border-color: var(--neon-cyan);
+  color: var(--neon-cyan); transform: scale(1.05);
+}
+
+/* =========================================================
+   THE TIMELINE ARCHITECTURE
+========================================================= */
+.timeline { max-width: 850px; margin: 0 auto; position: relative; padding-left: 40px; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, var(--neon-cyan), var(--line-border) 80%);
+}
+.tl-item { position: relative; }
+.tl-item::before {
+  content: ''; position: absolute; left: -45px; top: 44px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan);
+}
+.tl-item .card h3 { font-size: 1.6rem; margin-bottom: 6px; }
+.tl-item .card .role-meta {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+}
+.tl-item .card h4 { color: var(--neon-cyan); font-size: 1.1rem; font-weight: 500; }
+.badge-current {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.05em; text-transform: uppercase; background: rgba(16, 185, 129, 0.1);
+  color: var(--neon-emerald); border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 4px 10px; border-radius: var(--radius-sm);
+}
+.tl-item ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.tl-item ul li { position: relative; padding-left: 24px; font-size: 0.95rem; color: var(--text-secondary); }
+.tl-item ul li::before {
+  content: '→'; position: absolute; left: 0; color: var(--neon-gold);
+}
+
+/* =========================================================
+   GRID CONTEXTS: EDUCATION, PROJECTS, SKILLS
+========================================================= */
+#education { background: rgba(3, 7, 18, 0.6); }
+.education-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+.edu-card { display: flex; gap: 24px; align-items: flex-start; }
+.edu-icon {
+  width: 56px; height: 56px; border-radius: var(--radius-sm);
+  background: rgba(6, 182, 212, 0.05); border: 1px solid var(--line-active);
+  color: var(--neon-cyan); display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.education-grid h3 { font-size: 1.4rem; margin-bottom: 4px; }
+.education-grid .school { color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem; }
+.cgpa-tag {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem; font-weight: 700; color: var(--neon-gold);
+  background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 4px 14px; border-radius: var(--radius-sm);
+}
+
+/* Projects Spark-Matrix */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.proj-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.1em; color: var(--neon-gold); margin-bottom: 14px; display: block;
+}
+.project-grid h3 { font-size: 1.3rem; margin-bottom: 12px; color: #fff; }
+.project-grid p { color: var(--text-secondary); font-size: 0.95rem; }
+.mini-spark { width: 100%; height: 40px; margin-top: 24px; opacity: 0.6; transition: var(--transition-fluid); }
+.card:hover .mini-spark { opacity: 1; transform: scaleY(1.1); }
+.mini-spark path { fill: none; stroke: var(--neon-cyan); stroke-width: 2; stroke-linecap: round; }
+
+/* =========================================================
+   YOUTUBE MEDIA BROADCAST DESIGN ENVIRONMENT
+========================================================= */
+#broadcast { background: rgba(11, 19, 41, 0.2); border-top: 1px solid var(--line-grid); }
+.broadcast-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; align-items: center; }
+.broadcast-info h2 { font-size: 2.4rem; color: #fff; margin-bottom: 18px; }
+.broadcast-info p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 30px; }
+
+/* Responsive player matrix box optimized for seamless streaming */
+.video-frame-box {
+  position: relative; width: 100%;
+  background: var(--bg-surface); border: 1px solid var(--line-border);
+  border-radius: var(--radius-md); padding: 10px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transition: var(--transition-fluid);
+  /* Hardware rendering optimization layer to eliminate lag loops */
+  contain: content;
+  will-change: transform;
+}
+.video-frame-box::before {
+  content: 'LIVE // MULTIMEDIA FEED'; position: absolute; top: -28px; left: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--neon-gold);
+  letter-spacing: 0.1em;
+}
+.video-aspect-ratio {
+  position: relative; width: 100%; height: 0; padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden; border-radius: 6px; background: #000;
+}
+.video-aspect-ratio iframe {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+}
+.video-frame-box:hover {
+  border-color: rgba(239, 68, 68, 0.4); /* YouTube Red glow */
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 68, 68, 0.1);
+}
+
+/* =========================================================
+   SKILLS & DATA MATRICES
+========================================================= */
+.skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.skills-container h3 {
+  font-size: 1rem; font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
+  margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--line-border);
+}
+.skills-container ul { display: flex; flex-wrap: wrap; gap: 10px; }
+.skills-container ul li {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--line-border);
+  padding: 8px 18px; border-radius: var(--radius-sm);
+  font-size: 0.9rem; color: var(--text-secondary); transition: var(--transition-fluid);
+}
+.skills-container ul li:hover {
+  background: var(--bg-panel); border-color: var(--neon-cyan);
+  color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px var(--neon-glow);
+}
+
+/* =========================================================
+   CONTACT MATRICES & FOOTER LAYER
+========================================================= */
+.contact-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.contact-item {
+  background: var(--bg-surface); padding: 34px 24px; border-radius: var(--radius-md);
+  text-align: center; border: 1px solid var(--line-border); transition: var(--transition-fluid);
+}
+.contact-item:hover {
+  border-color: var(--neon-gold); background: var(--bg-panel);
+  transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+.contact-item i { font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 16px; }
+.contact-item p { font-size: 1rem; font-weight: 600; color: #fff; word-break: break-word; }
+.contact-item .sub {
+  font-size: 0.7rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+}
+
+footer {
+  background: #020613; border-top: 1px solid var(--line-border);
+  text-align: center; padding: 60px 20px;
+}
+footer p { color: var(--text-secondary); font-size: 0.9rem; }
+footer .foot-links { display: flex; justify-content: center; gap: 16px; margin: 24px 0; }
+footer .foot-links a {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line-border); display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); transition: var(--transition-fluid);
+}
+footer .foot-links a:hover {
+  background: rgba(6, 182, 212, 0.1); border-color: var(--neon-cyan);
+  color: var(--neon-cyan); transform: translateY(-3px);
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN SYSTEM OVERRIDES
+========================================================= */
+@media (max-width: 968px) {
+  .menu-toggle { display: block; }
+  .nav-links {
+    position: absolute; top: 100%; left: -100%; width: 100%;
+    background: var(--bg-core); flex-direction: column; padding: 40px; gap: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.9); transition: left 0.5s var(--ease-out-expo);
+    border-top: 1px solid var(--line-border);
+  }
+  .nav-links.active { left: 0; }
+  .hero { flex-direction: column-reverse; text-align: center; padding-top: 160px; }
+  .hero-content h3 { justify-content: center; }
+  .hero-content .desc { border-left: none; border-top: 3px solid var(--neon-cyan); padding-left: 0; padding-top: 20px; }
+  .buttons, .social-icons { justify-content: center; }
+  .index-ticker { margin: 0 auto 40px; }
+  .hero-stats { grid-template-columns: 1fr; gap: 24px; }
+  .stat { border-right: none; border-bottom: 1px solid var(--line-border); padding-bottom: 24px; }
+  .stat:last-child { border-bottom: none; }
+  .about-grid, .broadcast-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+   /* ===== Travel Section ===== */
+
+.travel-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:25px 0;
+}
+
+.travel-tags span{
+    padding:10px 18px;
+    border-radius:30px;
+    background:#111827;
+    border:1px solid rgba(255,255,255,.1);
+    transition:.3s;
+}
+
+.travel-tags span:hover{
+    background:#ef4444;
+    color:#fff;
+    transform:translateY(-3px);
+}
+
+.video-frame-box{
+    background:#111827;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+    contain:layout paint;
+    transform:translateZ(0);
+    backface-visibility:hidden;
+    will-change:auto;
+    box-shadow:none;
+}
+
+.video-frame-box:hover{
+    transform:none;
+    box-shadow:none;
+}
+
+.video-aspect-ratio{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    overflow:hidden;
+}
+
+.video-aspect-ratio iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+/* ===== End Travel Section ===== */
+</style>
+</style>
+</head>
+
+<body>
+
+<header id="header">
+  <nav class="navbar">
+    <div class="logo"><span>Gourab</span> Nath<small>Statistician</small></div>
+    <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-item active">Home</a></li>
+      <li><a href="#about" class="nav-item">About</a></li>
+      <li><a href="#experience" class="nav-item">Experience</a></li>
+      <li><a href="#education" class="nav-item">Education</a></li>
+      <li><a href="#projects" class="nav-item">Projects</a></li>
+      <li><a href="#broadcast" class="nav-item">Broadcast</a></li>
+      <li><a href="#skills" class="nav-item">Skills</a></li>
+      <li><a href="#contact" class="nav-item">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="home" class="hero wrap">
+  <div class="hero-content">
+    <h3>Official Statistics &amp; Survey Research</h3>
+    <h1>Gourab <em>Nath</em></h1>
+    <h2>Statistician · Data Analyst</h2>
+    <p class="desc">
+      Project Linked Person, <strong>Sampling &amp; Official Statistics Unit</strong> — 
+      <strong>Indian Statistical Institute, Kolkata.</strong> Translating regional microdata pipelines into systemic national infrastructure.
+    </p>
+    <div class="buttons">
+      <a href="assets/Gourab_Nath_CV.pdf" class="btn"><i class="fas fa-download"></i> Download CV</a>
+      <a href="#contact" class="btn-outline"><i class="fas fa-paper-plane"></i> Contact Matrix</a>
+    </div>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/gourab-nath/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.youtube.com/@GourabNath" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="mailto:gourabna@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <div class="index-ticker">
+      <div class="index-ticker-head">
+        <span>Composite Index · Spatial Survey Domains</span>
+        <b>Live Engine</b>
+      </div>
+      <svg class="index-chart" viewBox="0 0 300 60" preserveAspectRatio="none">
+        <path class="index-path" d="M0,50 Q40,10 80,40 T160,20 T240,45 T300,5"></path>
+      </svg>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="photo-frame">
+      <div class="decor-line v"></div>
+      <div class="decor-line h"></div>
+      <div class="photo-box">
+        <div class="initials">GN</div>
+        <img src="IMG20260220154638.jpg" alt="Gourab Nath" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hero-stats wrap reveal-stagger">
+  <div class="stat">
+    <div class="num">8<span>+</span></div>
+    <div class="label">National Survey Matrix Domains</div>
+  </div>
+  <div class="stat">
+    <div class="num">9.3</div>
+    <div class="label">M.Sc Cumulative CGPA</div>
+  </div>
+  <div class="stat">
+    <div class="num">2<span>nd</span></div>
+    <div class="label">International Poster Laurels</div>
+  </div>
+</div>
+
+<section id="about" class="wrap">
+  <div class="block-tag">System.Init</div>
+  <div class="section-head left">
+    <h2 class="section-title">Core Architecture</h2>
+    <p class="section-sub">A statistician's field notes on structural methodology and official analytics.</p>
+  </div>
+  <div class="about-grid">
+    <div>
+      <p>I function as a Statistician within the <strong>Sampling and Official Statistics Unit (SOSU)</strong> at the Indian Statistical Institute, Kolkata.</p>
+      <p>My work centers around processing multi-layered demographic files, macroeconomic indexes, and structural microdata parameters to engineer precise socio-economic models.</p>
+    </div>
+    <div class="dataset-panel">
+      <h4>Microdata Arrays Processed</h4>
+      <ul>
+        <li>PLFS</li><li>ASUSE</li><li>HCES</li><li>NFHS</li>
+        <li>CPI</li><li>WPI</li><li>GST</li><li>DGCI&amp;S</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <div class="block-tag">Vector.Timeline</div>
+  <div class="section-head left">
+    <h2 class="section-title">Professional Milestones</h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item card">
+      <h3>Project Linked Person</h3>
+      <div class="role-meta">
+        <h4>Indian Statistical Institute, Kolkata</h4>
+        <span class="badge-current">Active Engine</span>
+      </div>
+      <ul>
+        <li>Parsing Periodic Labour Force Survey (PLFS) microdata micro-metrics.</li>
+        <li>Architecting consumer and transactional spatial weighting frameworks for CPI/WPI metrics.</li>
+        <li>Developing predictive models integrating statistical learning and advanced matrix estimations.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="wrap">
+  <div class="block-tag">Academic.Core</div>
+  <div class="section-head left">
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="education-grid">
+    <div class="card edu-card">
+      <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div>
+        <h3>M.Sc. Statistics</h3>
+        <p class="school">Tripura University</p>
+        <span class="cgpa-tag">CGPA 9.3</span>
+      </div>
+    </div>
+    <div class="card edu-card">
+      <div class="edu-icon"><i class="fas fa-chart-bar"></i></div>
+      <div>
+        <h3>B.Sc. Statistics</h3>
+        <p class="school">Maharaja Bir Bikram College</p>
+        <span class="cgpa-tag">CGPA 7.0</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="wrap">
+  <div class="block-tag">Telemetry.Projects</div>
+  <div class="section-head">
+    <h2 class="section-title">Analytical Research</h2>
+  </div>
+  <div class="project-grid">
+    <div class="card">
+      <span class="proj-num">DATASET // 01</span>
+      <h3>PLFS Labor Architectures</h3>
+      <p>Computing comprehensive variance and survey stratification metrics across national labor indices.</p>
+      <svg class="mini-spark" viewBox="0 0 200 40"><path d="M0,35 L40,20 L80,30 L120,10 L160,25 L200,5"></path></svg>
+    </div>
+    <div class="card">
+      <span class="proj-num">DATASET // 02</span>
+      <h3>District Domestic Indices</h3>
+      <p>Structural synthesis of ASI and ASUSE matrices to map distinct regional geographic outputs.</p>
+      <svg class="mini-spark" viewBox="0 0 200 40"><path d="M0,30 L50,15 L100,25 L150,5 L200,20"></path></svg>
+    </div>
+    <div class="card">
+      <span class="proj-num">DATASET // 03</span>
+      <h3>Consumer Price Vectors</h3>
+      <p>Formulating local weight metrics and real-time structural survey modules for price computations.</p>
+      <svg class="mini-spark" viewBox="0 0 200 40"><path d="M0,10 L60,30 L120,15 L180,35 L200,5"></path></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== Travel & Media ===================== -->
+<section id="broadcast" class="wrap">
+
+    <div class="block-tag">Travel.Media</div>
+
+    <div class="broadcast-grid">
+
+        <div class="broadcast-info">
+
+            <h2>Travel Stories & Adventures</h2>
+
+            <p>
+                Outside my professional work, I enjoy travelling and capturing beautiful moments across India.
+                My YouTube channel is dedicated to travel vlogs, scenic landscapes, mountain adventures,
+                road trips, local food, hidden destinations, and cinematic travel experiences.
+                Every video tells a story of exploration and unforgettable memories.
+            </p>
+
+            <div class="travel-tags">
+
+                <span>🏔 Mountains</span>
+                <span>🚗 Road Trips</span>
+                <span>🌄 Nature</span>
+                <span>📷 Travel Vlogs</span>
+                <span>🍜 Local Food</span>
+                <span>🎬 Cinematic Videos</span>
+
+            </div>
+
+            <br>
+
+            <a href="https://www.youtube.com/@GourabNath"
+               target="_blank"
+               rel="noopener"
+               class="btn">
+
+                <i class="fab fa-youtube"></i>
+                Visit My YouTube Channel
+
+            </a>
+
+        </div>
+
+
+        <div class="video-frame-box">
+
+            <div class="video-aspect-ratio">
+
+                <iframe
+
+                    src="https://www.youtube-nocookie.com/embed/WrQM4VamoS0?rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+
+                    title="Travel Videos"
+
+                    loading="lazy"
+
+                    referrerpolicy="strict-origin-when-cross-origin"
+
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+
+                    allowfullscreen>
+
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="skills" class="wrap">
+  <div class="block-tag">Toolbox.Modules</div>
+  <div class="skills-container">
+    <div class="card">
+      <h3>Environments</h3>
+      <ul><li>R</li><li>Python</li><li>FoxPro</li><li>SPSS</li><li>SQL</li><li>Excel Dashboards</li></ul>
+    </div>
+    <div class="card">
+      <h3>Core Mechanics</h3>
+      <ul><li>Survey Sampling</li><li>Regression Frameworks</li><li>Machine Learning</li><li>Econometrics</li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="wrap">
+  <div class="block-tag">Connect.Interface</div>
+  <div class="contact-box">
+    <div class="contact-item">
+      <i class="fas fa-envelope"></i>
+      <p>gourabna@gmail.com</p>
+      <div class="sub">Secure Mail Exchange</div>
+    </div>
+    <div class="contact-item">
+      <i class="fab fa-linkedin"></i>
+      <p>gourab-nath</p>
+      <div class="sub">Network Identity</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Gourab Nath. Designed with ❤️</p>
+</footer>
+
+<script>
+// Mobile Navigation Interactions
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Scroll Event Handler for Header Transitions & Reveal Engine
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+
+  // Staggered Scroll Triggers
+  const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+  reveals.forEach(element => {
+    const windowHeight = window.innerHeight;
+    const elementTop = element.getBoundingClientRect().top;
+    const elementVisible = 120;
+    if (elementTop < windowHeight - elementVisible) {
+      element.classList.add('is-visible');
+    }
+  });
+});
+
+// Initialization trigger
+window.dispatchEvent(new Event('scroll'));
+</script>
+
+</body>
+</html>
