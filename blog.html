@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gourab Nath | Statistical Log &amp; Articles</title>
+<link rel="icon" type="image/png" href="cropped_circle_image.png">
+<meta name="description" content="Gourab Nath — Statistical logs, research notes, data science deep dives, and field experiences.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<style>
+/* =========================================================
+   SYSTEM DESIGN SYSTEM & THEME TOKENS
+========================================================= */
+:root {
+  --bg-core: #030712;
+  --bg-surface: #0b1329;
+  --bg-panel: #111d37;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  
+  /* Neon Accents */
+  --neon-cyan: #06b6d4;
+  --neon-emerald: #10b981;
+  --neon-gold: #f59e0b;
+  --neon-glow: rgba(6, 182, 212, 0.15);
+  
+  --line-grid: rgba(255, 255, 255, 0.03);
+  --line-border: rgba(255, 255, 255, 0.08);
+  --line-active: rgba(6, 182, 212, 0.4);
+  
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fluid: all 0.5s var(--ease-out-expo);
+}
+
+/* =========================================================
+   GLOBAL RESET & STRUCTURE
+========================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-core); }
+body {
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  background-color: var(--bg-core);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Live Animated Data Grid Background Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: 
+    linear-gradient(var(--line-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 100%);
+  animation: gridPan 20s linear infinite;
+}
+
+@keyframes gridPan {
+  from { background-position: 0 0; }
+  to { background-position: 40px 40px; }
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+section { padding: 140px 0 80px; position: relative; }
+
+.block-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  background: rgba(6, 182, 212, 0.06);
+  border: 1px solid var(--line-active);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
+}
+.block-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+  border-radius: 50%;
+}
+
+.section-head { max-width: 700px; margin: 0 auto 70px; text-align: center; }
+.section-head.left { margin-left: 0; text-align: left; }
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+.section-sub { color: var(--text-secondary); font-size: 1.05rem; }
+
+/* Interactive High-Tech Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, var(--neon-cyan), #0891b2);
+  color: var(--bg-core);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 700; font-size: 0.9rem;
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+  transition: var(--transition-fluid);
+  border: none; cursor: pointer;
+  margin-top: 15px;
+}
+.btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.5);
+}
+
+/* Glassmorphic Animated Cards */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-border);
+  border-radius: var(--radius-md);
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: var(--transition-fluid);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: var(--radius-md);
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, var(--line-border), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  transition: var(--transition-fluid);
+}
+.card:hover {
+  transform: translateY(-8px) scale(1.01);
+  background: var(--bg-panel);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--neon-glow);
+  border-color: var(--line-active);
+}
+.card:hover::before {
+  background: linear-gradient(135deg, var(--neon-cyan), transparent, var(--neon-gold));
+}
+
+/* =========================================================
+   HEADER / NAVIGATION LAYER
+========================================================= */
+header {
+  position: fixed; top: 0; left: 0; width: 100%;
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line-grid);
+  z-index: 1000;
+  transition: var(--transition-fluid);
+}
+header.scrolled {
+  background: var(--bg-core);
+  border-bottom-color: var(--line-border);
+}
+.navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1300px; margin: 0 auto; padding: 24px 5%;
+}
+.logo {
+  font-size: 1.4rem; font-weight: 700; color: #fff;
+  letter-spacing: -0.03em;
+}
+.logo span { color: var(--neon-cyan); }
+.logo small {
+  display: block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.15em; color: var(--text-secondary);
+  text-transform: uppercase; margin-top: 2px;
+}
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-secondary); transition: var(--transition-fluid);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-glow); }
+.menu-toggle { display: none; font-size: 1.4rem; cursor: pointer; color: #fff; }
+
+/* =========================================================
+   BLOG LOGIC LAYOUT ELEMENTS
+========================================================= */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+.post-meta {
+  display: flex;
+  gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--neon-gold);
+  margin-bottom: 12px;
+}
+.post-meta span i { margin-right: 6px; }
+.blog-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+  color: #fff;
+  line-height: 1.3;
+}
+.blog-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+.blog-tags span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+}
+
+footer {
+  background: #020613; border-top: 1px solid var(--line-border);
+  text-align: center; padding: 60px 20px;
+}
+footer p { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* =========================================================
+   RESPONSIVE DESIGN SYSTEM OVERRIDES
+========================================================= */
+@media (max-width: 968px) {
+  .menu-toggle { display: block; }
+  .nav-links {
+    position: absolute; top: 100%; left: -100%; width: 100%;
+    background: var(--bg-core); flex-direction: column; padding: 40px; gap: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.9); transition: left 0.5s var(--ease-out-expo);
+    border-top: 1px solid var(--line-border);
+  }
+  .nav-links.active { left: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<header id="header">
+  <nav class="navbar">
+    <div class="logo"><span>Gourab</span> Nath<small>Statistician</small></div>
+    <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links">
+      <li><a href="index.html#home" class="nav-item">Home</a></li>
+      <li><a href="index.html#about" class="nav-item">About</a></li>
+      <li><a href="index.html#experience" class="nav-item">Experience</a></li>
+      <li><a href="index.html#education" class="nav-item">Education</a></li>
+      <li><a href="index.html#projects" class="nav-item">Projects</a></li>
+      <li><a href="index.html#broadcast" class="nav-item">Broadcast</a></li>
+      <li><a href="index.html#skills" class="nav-item">Skills</a></li>
+      <li><a href="blog.html" class="nav-item active">Blog</a></li>
+      <li><a href="index.html#contact" class="nav-item">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="wrap">
+  <div class="block-tag">Telemetry.Log</div>
+  <div class="section-head left">
+    <h2 class="section-title">Statistical Logs &amp; Field Notes</h2>
+    <p class="section-sub">Articles regarding microdata processing architectures, deep learning paradigms, and general explorations.</p>
+  </div>
+
+  <div class="blog-grid">
+    
+    <!-- Blog Post 1 -->
+    <article class="card blog-card">
+      <div class="post-meta">
+        <span><i class="far fa-calendar"></i> July 2026</span>
+        <span><i class="far fa-clock"></i> 8 min read</span>
+      </div>
+      <h3>Parsing Complex Stratified Microdata Matrices: A Deep Dive into PLFS</h3>
+      <p>An exploratory breakdown analyzing the geometric intricacies within state-level microdata weights and designing optimal pipeline architectures for structural estimation errors.</p>
+      <div class="blog-tags">
+        <span>#PLFS</span>
+        <span>#Microdata</span>
+        <span>#R</span>
+      </div>
+      <a href="#" class="btn">Read Entry <i class="fas fa-arrow-right"></i></a>
+    </article>
+
+    <!-- Blog Post 2 -->
+    <article class="card blog-card">
+      <div class="post-meta">
+        <span><i class="far fa-calendar"></i> June 2026</span>
+        <span><i class="far fa-clock"></i> 5 min read</span>
+      </div>
+      <h3>Automating Consumer Price Index Vector Calculations</h3>
+      <p>How spatial weights can be adjusted in real-time pipelines using statistical matrix learning engines to eliminate lag loops inside transactional analytics.</p>
+      <div class="blog-tags">
+        <span>#CPI</span>
+        <span>#Econometrics</span>
+        <span>#Python</span>
+      </div>
+      <a href="#" class="btn">Read Entry <i class="fas fa-arrow-right"></i></a>
+    </article>
+
+    <!-- Blog Post 3 -->
+    <article class="card blog-card">
+      <div class="post-meta">
+        <span><i class="far fa-calendar"></i> May 2026</span>
+        <span><i class="far fa-clock"></i> 6 min read</span>
+      </div>
+      <h3>Field Logistics to Computational Realities</h3>
+      <p>Reflecting on systemic field data collection infrastructures and transitioning localized data pipelines into broader national repositories smoothly.</p>
+      <div class="blog-tags">
+        <span>#SurveyMethodology</span>
+        <span>#DataScience</span>
+      </div>
+      <a href="#" class="btn">Read Entry <i class="fas fa-arrow-right"></i></a>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Gourab Nath. Designed with ❤️</p>
+</footer>
+
+<script>
+// Mobile Navigation Interactions
+const menuToggle = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Scroll Event Handler for Header Transitions
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+</script>
+
+</body>
+</html>
