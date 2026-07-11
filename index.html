@@ -568,67 +568,40 @@ footer .foot-links a:hover {
 /* =========================================================
    RESPONSIVE DESIGN SYSTEM OVERRIDES
 ========================================================= */
+
 /* ===== Live Dashboard ===== */
-
 .live-panel{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-    margin-top:15px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:15px;
 }
-
 .live-box{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:15px;
-    padding:18px;
-    backdrop-filter:blur(12px);
-    transition:.35s;
+display:flex;
+align-items:center;
+gap:15px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.08);
+border-radius:15px;
+padding:18px;
+backdrop-filter:blur(12px);
+transition:.35s;
 }
-
 .live-box:hover{
-    transform:translateY(-5px) scale(1.03);
-    border-color:#06b6d4;
-    box-shadow:0 0 25px rgba(6,182,212,.35);
+transform:translateY(-5px) scale(1.03);
+border-color:#06b6d4;
+box-shadow:0 0 25px rgba(6,182,212,.35);
 }
-
 .live-box i{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(6,182,212,.1);
-    color:#06b6d4;
-    font-size:22px;
+width:55px;height:55px;border-radius:50%;
+display:flex;justify-content:center;align-items:center;
+background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
 }
+.live-box small{display:block;color:#9ca3af;font-size:12px;margin-bottom:4px;}
+.live-box h3{margin:0;font-size:18px;color:#fff;font-weight:700;word-break:break-word;}
+@media(max-width:700px){.live-panel{grid-template-columns:1fr;}}
 
-.live-box small{
-    display:block;
-    color:#9ca3af;
-    font-size:12px;
-    margin-bottom:4px;
-}
 
-.live-box h3{
-    margin:0;
-    font-size:18px;
-    color:#fff;
-    font-weight:700;
-    word-break:break-word;
-}
-
-@media(max-width:700px){
-
-.live-panel{
-    grid-template-columns:1fr;
-}
-
-}
 @media (max-width: 968px) {
   .menu-toggle { display: block; }
   .nav-links {
@@ -1129,19 +1102,7 @@ if (!lastVisit || now - Number(lastVisit) > 24*60*60*1000){
         });
 
 }
-// ===============================
-// LIVE VISITOR COUNTER
-// ===============================
 
-fetch("https://visitor-api.gourabna.workers.dev/?view=1")
-.then(response => response.json())
-.then(data => {
-
-    document.getElementById("visitorCount").innerHTML =
-        data.visitors.toLocaleString();
-
-})
-.catch(error => console.log(error));
 function updateHeroClock(){
 
     const now = new Date();
@@ -1166,11 +1127,12 @@ function updateHeroClock(){
     if(zone){
         zone.innerHTML=Intl.DateTimeFormat().resolvedOptions().timeZone;
     }
-
 }
 
 updateHeroClock();
 setInterval(updateHeroClock,1000);
+
+
 // Initialization trigger
 window.dispatchEvent(new Event('scroll'));
 </script>
