@@ -905,38 +905,43 @@ footer .foot-links a:hover {
 </section>
 
 <!-- =========================================================
-     COMPACT ICON MATRIX 
+     COMPACT ICON MATRIX WITH LIVE TIME
 ========================================================= -->
 <footer id="contact" style="background: #020613; border-top: 1px solid var(--line-border); padding: 40px 0; text-align: center; position: relative;">
   <div class="wrap">
     
     <!-- Pure Icon Grid Overlay -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 24px;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 20px;">
       
-      <!-- Mail Exchange Icon (Native Cyan/Mint Glow) -->
+      <!-- Mail Exchange Icon -->
       <a href="mailto:contact@gourabna.online" aria-label="Email" style="font-size: 1.5rem; color: #06b6d4; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4)); transition: var(--transition-fluid);">
         <i class="fas fa-envelope"></i>
       </a>
       
-      <!-- LinkedIn Icon (Brand Blue) -->
+      <!-- LinkedIn Icon -->
       <a href="https://www.linkedin.com/in/gourab-nath/" target="_blank" rel="noopener" aria-label="LinkedIn" style="font-size: 1.5rem; color: #0077b5; filter: drop-shadow(0 0 8px rgba(0, 119, 181, 0.4)); transition: var(--transition-fluid);">
         <i class="fab fa-linkedin"></i>
       </a>
       
-      <!-- YouTube Icon (Brand Red) -->
+      <!-- YouTube Icon -->
       <a href="https://www.youtube.com/@GourabNath" target="_blank" rel="noopener" aria-label="YouTube" style="font-size: 1.5rem; color: #ff0000; filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.4)); transition: var(--transition-fluid);">
         <i class="fab fa-youtube"></i>
       </a>
       
-      <!-- X.com Icon (Brand White/Dark Neutral) -->
+      <!-- X.com Icon -->
       <a href="https://x.com/gourabna" target="_blank" rel="noopener" aria-label="X (Twitter)" style="font-size: 1.5rem; color: #ffffff; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)); transition: var(--transition-fluid);">
         <i class="fab fa-x-twitter"></i>
       </a>
       
     </div>
 
+    <!-- Live Telemetry Matrix (Date & Time Engine) -->
+    <div id="systemTime" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--neon-cyan); letter-spacing: 0.1em; margin-bottom: 24px; text-transform: uppercase;">
+      SYS.LOC // LOADING REALTIME MATRIX...
+    </div>
+
     <!-- System Metadata Line -->
-    <p style="color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace;">
+    <p style="color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin: 0;">
       &copy; 2026 Gourab Nath. System Core Interface.
     </p>
     
@@ -972,6 +977,32 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+
+// Live Real-Time Date & Time Matrix Engine
+function updateSystemClock() {
+  const clockElement = document.getElementById('systemTime');
+  if (!clockElement) return;
+
+  const now = new Date();
+  
+  const options = { 
+    year: 'numeric', 
+    month: 'short', 
+    day: '2-digit', 
+    weekday: 'short',
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit', 
+    hour12: true 
+  };
+  
+  const formattedString = now.toLocaleString('en-US', options).replace(/,/g, ' //');
+  clockElement.innerHTML = `SYS.LOG // ${formattedString}`;
+}
+
+// Initialize and step clock every 1000ms
+setInterval(updateSystemClock, 1000);
+updateSystemClock();
 
 // Initialization trigger
 window.dispatchEvent(new Event('scroll'));
