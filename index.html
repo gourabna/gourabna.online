@@ -280,7 +280,7 @@ header.scrolled {
   border-color: var(--neon-cyan); transform: translateY(-4px);
 }
 
-/* Dynamic Live Ticker Element */
+/* Dynamic Live Ticker Element & Live Panel Grid */
 .index-ticker {
   background: linear-gradient(135deg, var(--bg-surface), var(--bg-panel));
   border: 1px solid var(--line-border);
@@ -310,14 +310,36 @@ header.scrolled {
 }
 @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.2); } }
 
-.index-chart { width: 100%; height: 60px; display: block; }
-.index-path {
-  fill: none; stroke: var(--neon-cyan); stroke-width: 2.5;
-  stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: 1000; stroke-dashoffset: 1000;
-  animation: drawLine 3s cubic-bezier(0.4, 0, 0.2, 1) forwards infinite;
+.live-panel{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:15px;
 }
-@keyframes drawLine { to { stroke-dashoffset: 0; } }
+.live-box{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:15px;
+  padding:18px;
+  backdrop-filter:blur(12px);
+  transition:.35s;
+}
+.live-box:hover{
+  transform:translateY(-5px) scale(1.03);
+  border-color:#06b6d4;
+  box-shadow:0 0 25px rgba(6,182,212,.35);
+}
+.live-box i{
+  width:55px;height:55px;border-radius:50%;
+  display:flex;justify-content:center;align-items:center;
+  background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
+}
+.live-box small{display:block;color:#9ca3af;font-size:12px;margin-bottom:4px;}
+.live-box h3{margin:0;font-size:14px;color:#fff;font-weight:700;word-break:break-word;font-family: 'JetBrains Mono', monospace;}
+@media(max-width:700px){.live-panel{grid-template-columns:1fr;}}
 
 /* Advanced Image Wireframe Framing & Colorful Overrides */
 .hero-image { flex: 0.8; display: flex; justify-content: center; position: relative; }
@@ -482,34 +504,6 @@ header.scrolled {
 .broadcast-info h2 { font-size: 2.4rem; color: #fff; margin-bottom: 18px; }
 .broadcast-info p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 30px; }
 
-/* Responsive player matrix box optimized for seamless streaming */
-.video-frame-box {
-  position: relative; width: 100%;
-  background: var(--bg-surface); border: 1px solid var(--line-border);
-  border-radius: var(--radius-md); padding: 10px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  transition: var(--transition-fluid);
-  /* Hardware rendering optimization layer to eliminate lag loops */
-  contain: content;
-  will-change: transform;
-}
-.video-frame-box::before {
-  content: 'LIVE // MULTIMEDIA FEED'; position: absolute; top: -28px; left: 10px;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--neon-gold);
-  letter-spacing: 0.1em;
-}
-.video-aspect-ratio {
-  position: relative; width: 100%; height: 0; padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  overflow: hidden; border-radius: 6px; background: #000;
-}
-.video-aspect-ratio iframe {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
-}
-.video-frame-box:hover {
-  border-color: rgba(239, 68, 68, 0.4); /* YouTube Red glow */
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 68, 68, 0.1);
-}
-
 /* =========================================================
    SKILLS & DATA MATRICES
 ========================================================= */
@@ -531,77 +525,8 @@ header.scrolled {
 }
 
 /* =========================================================
-   CONTACT MATRICES & FOOTER LAYER
-========================================================= */
-.contact-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-.contact-item {
-  background: var(--bg-surface); padding: 34px 24px; border-radius: var(--radius-md);
-  text-align: center; border: 1px solid var(--line-border); transition: var(--transition-fluid);
-}
-.contact-item:hover {
-  border-color: var(--neon-gold); background: var(--bg-panel);
-  transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-}
-.contact-item i { font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 16px; }
-.contact-item p { font-size: 1rem; font-weight: 600; color: #fff; word-break: break-word; }
-.contact-item .sub {
-  font-size: 0.7rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
-}
-
-footer {
-  background: #020613; border-top: 1px solid var(--line-border);
-  text-align: center; padding: 60px 20px;
-}
-footer p { color: var(--text-secondary); font-size: 0.9rem; }
-footer .foot-links { display: flex; justify-content: center; gap: 16px; margin: 24px 0; }
-footer .foot-links a {
-  width: 44px; height: 44px; border-radius: var(--radius-sm);
-  border: 1px solid var(--line-border); display: flex; align-items: center; justify-content: center;
-  color: var(--text-secondary); transition: var(--transition-fluid);
-}
-footer .foot-links a:hover {
-  background: rgba(6, 182, 212, 0.1); border-color: var(--neon-cyan);
-  color: var(--neon-cyan); transform: translateY(-3px);
-}
-
-/* =========================================================
    RESPONSIVE DESIGN SYSTEM OVERRIDES
 ========================================================= */
-
-/* ===== Live Dashboard ===== */
-.live-panel{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-margin-top:15px;
-}
-.live-box{
-display:flex;
-align-items:center;
-gap:15px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.08);
-border-radius:15px;
-padding:18px;
-backdrop-filter:blur(12px);
-transition:.35s;
-}
-.live-box:hover{
-transform:translateY(-5px) scale(1.03);
-border-color:#06b6d4;
-box-shadow:0 0 25px rgba(6,182,212,.35);
-}
-.live-box i{
-width:55px;height:55px;border-radius:50%;
-display:flex;justify-content:center;align-items:center;
-background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
-}
-.live-box small{display:block;color:#9ca3af;font-size:12px;margin-bottom:4px;}
-.live-box h3{margin:0;font-size:18px;color:#fff;font-weight:700;word-break:break-word;}
-@media(max-width:700px){.live-panel{grid-template-columns:1fr;}}
-
-
 @media (max-width: 968px) {
   .menu-toggle { display: block; }
   .nav-links {
@@ -621,15 +546,14 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
   .stat:last-child { border-bottom: none; }
   .about-grid, .broadcast-grid { grid-template-columns: 1fr; gap: 40px; }
 }
-   /* ===== Travel Section ===== */
 
+/* ===== Travel Section ===== */
 .travel-tags{
     display:flex;
     flex-wrap:wrap;
     gap:12px;
     margin:25px 0;
 }
-
 .travel-tags span{
     padding:10px 18px;
     border-radius:30px;
@@ -637,13 +561,11 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
     border:1px solid rgba(255,255,255,.1);
     transition:.3s;
 }
-
 .travel-tags span:hover{
     background:#ef4444;
     color:#fff;
     transform:translateY(-3px);
 }
-
 .video-frame-box{
     background:#111827;
     border-radius:12px;
@@ -655,19 +577,16 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
     will-change:auto;
     box-shadow:none;
 }
-
 .video-frame-box:hover{
     transform:none;
     box-shadow:none;
 }
-
 .video-aspect-ratio{
     position:relative;
     width:100%;
     padding-top:56.25%;
     overflow:hidden;
 }
-
 .video-aspect-ratio iframe{
     position:absolute;
     inset:0;
@@ -675,9 +594,6 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
     height:100%;
     border:0;
 }
-
-/* ===== End Travel Section ===== */
-</style>
 </style>
 </head>
 
@@ -687,17 +603,17 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
   <nav class="navbar">
     <div class="logo"><span>Gourab</span> Nath<small>Statistician</small></div>
     <div class="menu-toggle" id="mobile-menu"><i class="fas fa-bars"></i></div>
-<ul class="nav-links">
-  <li><a href="#home" class="nav-item active">Home</a></li>
-  <li><a href="#about" class="nav-item">About</a></li>
-  <li><a href="#experience" class="nav-item">Experience</a></li>
-  <li><a href="#education" class="nav-item">Education</a></li>
-  <li><a href="#projects" class="nav-item">Projects</a></li>
-  <li><a href="#broadcast" class="nav-item">Broadcast</a></li>
-  <li><a href="#skills" class="nav-item">Skills</a></li>
-  <li><a href="blog.html" class="nav-item">Blog</a></li>
-  <li><a href="#contact" class="nav-item">Contact</a></li>
-</ul>
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-item active">Home</a></li>
+      <li><a href="#about" class="nav-item">About</a></li>
+      <li><a href="#experience" class="nav-item">Experience</a></li>
+      <li><a href="#education" class="nav-item">Education</a></li>
+      <li><a href="#projects" class="nav-item">Projects</a></li>
+      <li><a href="#broadcast" class="nav-item">Broadcast</a></li>
+      <li><a href="#skills" class="nav-item">Skills</a></li>
+      <li><a href="blog.html" class="nav-item">Blog</a></li>
+      <li><a href="#contact" class="nav-item">Contact</a></li>
+    </ul>
   </nav>
 </header>
 
@@ -717,53 +633,45 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
     <div class="social-icons">
       <a href="https://www.linkedin.com/in/gourab-nath/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="https://www.youtube.com/@GourabNath" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      <a href="mailto:gourabna@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="mailto:contact@gourabna.online" aria-label="Email"><i class="fas fa-envelope"></i></a>
     </div>
 
-<div class="index-ticker">
-
-    <div class="index-ticker-head">
-        <span>LIVE WEBSITE STATUS</span>
-        <b>ONLINE</b>
+    <div class="index-ticker">
+      <div class="index-ticker-head">
+          <span>LIVE WEBSITE STATUS</span>
+          <b>ONLINE</b>
+      </div>
+      <div class="live-panel">
+          <div class="live-box">
+              <i class="fas fa-calendar-alt"></i>
+              <div>
+                  <small>Date</small>
+                  <h3 id="liveDate">--/--/----</h3>
+              </div>
+          </div>
+          <div class="live-box">
+              <i class="fas fa-clock"></i>
+              <div>
+                  <small>Current Time</small>
+                  <h3 id="liveTime">00:00:00</h3>
+              </div>
+          </div>
+          <div class="live-box">
+              <i class="fas fa-eye"></i>
+              <div>
+                  <small>Visitors</small>
+                  <h3 id="visitorCount">0</h3>
+              </div>
+          </div>
+          <div class="live-box">
+              <i class="fas fa-globe"></i>
+              <div>
+                  <small>Timezone</small>
+                  <h3 id="timezone">UTC</h3>
+              </div>
+          </div>
+      </div>
     </div>
-
-    <div class="live-panel">
-
-        <div class="live-box">
-            <i class="fas fa-calendar-alt"></i>
-            <div>
-                <small>Date</small>
-                <h3 id="liveDate"></h3>
-            </div>
-        </div>
-
-        <div class="live-box">
-            <i class="fas fa-clock"></i>
-            <div>
-                <small>Current Time</small>
-                <h3 id="liveTime"></h3>
-            </div>
-        </div>
-
-        <div class="live-box">
-            <i class="fas fa-eye"></i>
-            <div>
-                <small>Visitors</small>
-                <h3 id="visitorCount">0</h3>
-            </div>
-        </div>
-
-        <div class="live-box">
-            <i class="fas fa-globe"></i>
-            <div>
-                <small>Timezone</small>
-                <h3 id="timezone"></h3>
-            </div>
-        </div>
-
-    </div>
-
-</div>
   </div>
 
   <div class="hero-image">
@@ -887,76 +795,37 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
   </div>
 </section>
 
-<!-- ===================== Travel & Media ===================== -->
 <section id="broadcast" class="wrap">
-
     <div class="block-tag">Travel.Media</div>
-
     <div class="broadcast-grid">
-
         <div class="broadcast-info">
-
             <h2>Travel Stories & Adventures</h2>
-
             <p>
                 Outside my professional work, I enjoy travelling and capturing beautiful moments across India.
                 My YouTube channel is dedicated to travel vlogs, scenic landscapes, mountain adventures,
                 road trips, local food, hidden destinations, and cinematic travel experiences.
                 Every video tells a story of exploration and unforgettable memories.
             </p>
-
             <div class="travel-tags">
-
                 <span>🏔 Mountains</span>
                 <span>🚗 Road Trips</span>
                 <span>🌄 Nature</span>
                 <span>📷 Travel Vlogs</span>
                 <span>🍜 Local Food</span>
                 <span>🎬 Cinematic Videos</span>
-
             </div>
-
             <br>
-
-            <a href="https://www.youtube.com/@GourabNath"
-               target="_blank"
-               rel="noopener"
-               class="btn">
-
-                <i class="fab fa-youtube"></i>
-                Visit My YouTube Channel
-
+            <a href="https://www.youtube.com/@GourabNath" target="_blank" rel="noopener" class="btn">
+                <i class="fab fa-youtube"></i> Visit My YouTube Channel
             </a>
-
         </div>
-
 
         <div class="video-frame-box">
-
             <div class="video-aspect-ratio">
-
-                <iframe
-
-                    src="https://www.youtube.com/embed/WrQM4VamoS0?si=p3V2BIwMO_GrDgcl"
-
-                    title="Travel Videos"
-
-                    loading="lazy"
-
-                    referrerpolicy="strict-origin-when-cross-origin"
-
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-
-                    allowfullscreen>
-
-                </iframe>
-
+                <iframe src="https://www.youtube.com/embed/WrQM4VamoS0?si=p3V2BIwMO_GrDgcl" title="Travel Videos" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 <section id="skills" class="wrap">
@@ -981,39 +850,33 @@ background:rgba(6,182,212,.1);color:#06b6d4;font-size:22px;
     
     <!-- Pure Icon Grid Overlay -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 20px;">
-      
       <!-- Mail Exchange Icon -->
       <a href="mailto:contact@gourabna.online" aria-label="Email" style="font-size: 1.5rem; color: #06b6d4; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4)); transition: var(--transition-fluid);">
         <i class="fas fa-envelope"></i>
       </a>
-      
       <!-- LinkedIn Icon -->
       <a href="https://www.linkedin.com/in/gourab-nath/" target="_blank" rel="noopener" aria-label="LinkedIn" style="font-size: 1.5rem; color: #0077b5; filter: drop-shadow(0 0 8px rgba(0, 119, 181, 0.4)); transition: var(--transition-fluid);">
         <i class="fab fa-linkedin"></i>
       </a>
-      
       <!-- YouTube Icon -->
       <a href="https://www.youtube.com/@GourabNath" target="_blank" rel="noopener" aria-label="YouTube" style="font-size: 1.5rem; color: #ff0000; filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.4)); transition: var(--transition-fluid);">
         <i class="fab fa-youtube"></i>
       </a>
-      
       <!-- X.com Icon -->
       <a href="https://x.com/gourabna" target="_blank" rel="noopener" aria-label="X (Twitter)" style="font-size: 1.5rem; color: #ffffff; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)); transition: var(--transition-fluid);">
         <i class="fab fa-x-twitter"></i>
       </a>
-      
     </div>
 
     <!-- Live Telemetry Matrix (Date & Time Engine) -->
     <div id="systemTime" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--neon-cyan); letter-spacing: 0.1em; margin-bottom: 24px; text-transform: uppercase;">
-      SYS.LOC // LOADING REALTIME MATRIX...
+      SYS.LOG // LOADING REALTIME MATRIX...
     </div>
 
     <!-- System Metadata Line -->
     <p style="color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin: 0;">
       &copy; 2026 Gourab Nath. System Core Interface.
     </p>
-    
   </div>
 </footer>
 
@@ -1047,93 +910,85 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Live Real-Time Date & Time Matrix Engine
-function updateSystemClock() {
-  const clockElement = document.getElementById('systemTime');
-  if (!clockElement) return;
-
+// =========================================================
+// UNIFIED REAL-TIME DATE, TIME & METRIC MODULES
+// =========================================================
+function updateClocks() {
   const now = new Date();
-  
-  const options = { 
-    year: 'numeric', 
-    month: 'short', 
-    day: '2-digit', 
-    weekday: 'short',
-    hour: '2-digit', 
-    minute: '2-digit', 
-    second: '2-digit', 
-    hour12: true 
-  };
-  
-  const formattedString = now.toLocaleString('en-US', options).replace(/,/g, ' //');
-  clockElement.innerHTML = `SYS.LOG // ${formattedString}`;
+
+  // 1. Update Hero Dashboard Widgets
+  const dateEl = document.getElementById("liveDate");
+  const timeEl = document.getElementById("liveTime");
+  const zoneEl = document.getElementById("timezone");
+
+  if (dateEl) {
+    dateEl.innerHTML = now.toLocaleDateString("en-IN", {
+      weekday: "short",
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+  }
+  if (timeEl) {
+    timeEl.innerHTML = now.toLocaleTimeString("en-IN");
+  }
+  if (zoneEl) {
+    zoneEl.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  }
+
+  // 2. Update Footer Telemetry Matrix Console Log
+  const systemTimeEl = document.getElementById('systemTime');
+  if (systemTimeEl) {
+    const options = { 
+      year: 'numeric', 
+      month: 'short', 
+      day: '2-digit', 
+      weekday: 'short',
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit', 
+      hour12: true 
+    };
+    const formattedString = now.toLocaleString('en-US', options).replace(/,/g, ' //');
+    systemTimeEl.innerHTML = `SYS.LOG // ${formattedString}`;
+  }
 }
 
-// Initialize and step clock every 1000ms
-setInterval(updateSystemClock, 1000);
-updateSystemClock();
-// =========================
-// LIVE VISITOR COUNTER
-// =========================
+// Initialize Clocks Immediately and Run Intervals Safely
+updateClocks();
+setInterval(updateClocks, 1000);
+
+// =========================================================
+// LIVE VISITOR COUNTER IMPLEMENTATION
+// =========================================================
+function showCounter(count) {
+  const visitorCountEl = document.getElementById("visitorCount");
+  if (visitorCountEl) {
+    visitorCountEl.innerHTML = count.toLocaleString();
+  }
+}
 
 const lastVisit = localStorage.getItem("lastVisit");
-const now = Date.now();
+const nowTime = Date.now();
 
-function showCounter(count){
-    document.getElementById("visitorCount").innerHTML =
-        count.toLocaleString();
+if (!lastVisit || nowTime - Number(lastVisit) > 24 * 60 * 60 * 1000) {
+  fetch("https://visitor-api.gourabna.workers.dev/")
+    .then(r => r.json())
+    .then(data => {
+      showCounter(data.visitors);
+      localStorage.setItem("lastVisit", nowTime);
+    })
+    .catch(err => console.log("Visitor tracker off-grid:", err));
+} else {
+  fetch("https://visitor-api.gourabna.workers.dev/?view=1")
+    .then(r => r.json())
+    .then(data => {
+      showCounter(data.visitors);
+    })
+    .catch(err => console.log("Visitor tracker off-grid:", err));
 }
 
-if (!lastVisit || now - Number(lastVisit) > 24*60*60*1000){
-
-    fetch("https://visitor-api.gourabna.workers.dev/")
-        .then(r=>r.json())
-        .then(data=>{
-            showCounter(data.visitors);
-            localStorage.setItem("lastVisit", now);
-        });
-
-}else{
-
-    fetch("https://visitor-api.gourabna.workers.dev/?view=1")
-        .then(r=>r.json())
-        .then(data=>{
-            showCounter(data.visitors);
-        });
-
-}
-
-function updateHeroClock(){
-
-    const now = new Date();
-
-    const date=document.getElementById("liveDate");
-    const time=document.getElementById("liveTime");
-    const zone=document.getElementById("timezone");
-
-    if(date){
-        date.innerHTML=now.toLocaleDateString("en-IN",{
-            weekday:"short",
-            day:"2-digit",
-            month:"short",
-            year:"numeric"
-        });
-    }
-
-    if(time){
-        time.innerHTML=now.toLocaleTimeString("en-IN");
-    }
-
-    if(zone){
-        zone.innerHTML=Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
-}
-
-updateHeroClock();
-setInterval(updateHeroClock,1000);
-
-
-// Initialization trigger
+// Fire global initialization window scroll
 window.dispatchEvent(new Event('scroll'));
 </script>
 
