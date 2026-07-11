@@ -686,15 +686,50 @@ footer .foot-links a:hover {
       <a href="mailto:gourabna@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
     </div>
 
-    <div class="index-ticker">
-      <div class="index-ticker-head">
-        <span>Composite Index · Spatial Survey Domains</span>
-        <b>Live Engine</b>
-      </div>
-      <svg class="index-chart" viewBox="0 0 300 60" preserveAspectRatio="none">
-        <path class="index-path" d="M0,50 Q40,10 80,40 T160,20 T240,45 T300,5"></path>
-      </svg>
+<div class="index-ticker">
+
+    <div class="index-ticker-head">
+        <span>LIVE WEBSITE STATUS</span>
+        <b>ONLINE</b>
     </div>
+
+    <div class="live-panel">
+
+        <div class="live-box">
+            <i class="fas fa-calendar-alt"></i>
+            <div>
+                <small>Date</small>
+                <h3 id="liveDate"></h3>
+            </div>
+        </div>
+
+        <div class="live-box">
+            <i class="fas fa-clock"></i>
+            <div>
+                <small>Current Time</small>
+                <h3 id="liveTime"></h3>
+            </div>
+        </div>
+
+        <div class="live-box">
+            <i class="fas fa-eye"></i>
+            <div>
+                <small>Visitors</small>
+                <h3 id="visitorCount">0</h3>
+            </div>
+        </div>
+
+        <div class="live-box">
+            <i class="fas fa-globe"></i>
+            <div>
+                <small>Timezone</small>
+                <h3 id="timezone"></h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>
   </div>
 
   <div class="hero-image">
@@ -1003,7 +1038,36 @@ function updateSystemClock() {
 // Initialize and step clock every 1000ms
 setInterval(updateSystemClock, 1000);
 updateSystemClock();
+// =========================
+// LIVE VISITOR COUNTER
+// =========================
 
+const lastVisit = localStorage.getItem("lastVisit");
+const now = Date.now();
+
+function showCounter(count){
+    document.getElementById("visitorCount").innerHTML =
+        count.toLocaleString();
+}
+
+if (!lastVisit || now - Number(lastVisit) > 24*60*60*1000){
+
+    fetch("https://visitor-api.gourabna.workers.dev/")
+        .then(r=>r.json())
+        .then(data=>{
+            showCounter(data.visitors);
+            localStorage.setItem("lastVisit", now);
+        });
+
+}else{
+
+    fetch("https://visitor-api.gourabna.workers.dev/?view=1")
+        .then(r=>r.json())
+        .then(data=>{
+            showCounter(data.visitors);
+        });
+
+}
 // Initialization trigger
 window.dispatchEvent(new Event('scroll'));
 </script>
