@@ -176,6 +176,22 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
   background: linear-gradient(135deg, var(--neon-cyan), transparent, var(--neon-gold));
 }
 
+/* Website Analytics Inline Box styling */
+.index-ticker {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-panel));
+  border: 1px solid var(--line-border);
+  border-radius: var(--radius-md); padding: 14px 20px;
+  max-width: 100%; width: 100%; margin: 0 auto 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  position: relative; overflow: hidden;
+}
+.index-ticker::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent);
+  transform: translateX(-100%); animation: sweep 4s linear infinite;
+}
+@keyframes sweep { 100% { transform: translateX(100%); } }
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; transform: scale(1.2); } }
+
 /* =========================================================
    HEADER / NAVIGATION LAYER
 ========================================================= */
@@ -312,7 +328,6 @@ footer p { color: var(--text-secondary); font-size: 0.9rem; }
 
   <div class="blog-grid">
     
-    <!-- Blog Post 1 -->
     <article class="card blog-card">
       <div class="post-meta">
         <span><i class="far fa-calendar"></i> July 2026</span>
@@ -328,7 +343,6 @@ footer p { color: var(--text-secondary); font-size: 0.9rem; }
       <a href="#" class="btn">Read Entry <i class="fas fa-arrow-right"></i></a>
     </article>
 
-    <!-- Blog Post 2 -->
     <article class="card blog-card">
       <div class="post-meta">
         <span><i class="far fa-calendar"></i> June 2026</span>
@@ -344,7 +358,6 @@ footer p { color: var(--text-secondary); font-size: 0.9rem; }
       <a href="#" class="btn">Read Entry <i class="fas fa-arrow-right"></i></a>
     </article>
 
-    <!-- Blog Post 3 -->
     <article class="card blog-card">
       <div class="post-meta">
         <span><i class="far fa-calendar"></i> May 2026</span>
@@ -363,25 +376,139 @@ footer p { color: var(--text-secondary); font-size: 0.9rem; }
 </section>
 
 <footer>
-  <p>&copy; 2026 Gourab Nath. Designed with ❤️</p>
+  <div class="wrap">
+    <div class="index-ticker">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; overflow-x: auto; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; scrollbar-width: none; -ms-overflow-style: none;">
+        
+        <div style="display: flex; align-items: center; gap: 6px; color: var(--neon-emerald); font-weight: bold;">
+          <span style="width: 6px; height: 6px; background: var(--neon-emerald); border-radius: 50%; box-shadow: 0 0 8px var(--neon-emerald); animation: pulse 1.5s infinite;"></span>
+          <span>LIVE</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">👁 Visitors:</span>
+          <strong id="visitorCount" style="color: #fff; font-weight: 500;">0</strong>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">📅 Date:</span>
+          <strong id="liveDate" style="color: #fff; font-weight: 500;">--/--/----</strong>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">🕒 Time:</span>
+          <strong id="liveTime" style="color: #fff; font-weight: 500;">00:00:00</strong>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">🌍 Zone:</span>
+          <strong id="timezone" style="color: #fff; font-weight: 500;">UTC</strong>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">☁ Host:</span>
+          <strong style="color: #fff; font-weight: 500;">Cloudflare</strong>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span style="color: var(--text-secondary);">📶 Core:</span>
+          <strong style="color: var(--neon-emerald); font-weight: bold;">ONLINE</strong>
+        </div>
+
+      </div>
+    </div>
+    <p style="color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; margin: 0;">
+      &copy; 2026 Gourab Nath. System Core Interface.
+    </p>
+  </div>
 </footer>
 
 <script>
-// Mobile Navigation Interactions
-const menuToggle = document.getElementById('mobile-menu');
-const navLinks = document.querySelector('.nav-links');
+document.addEventListener("DOMContentLoaded", () => {
+  // Mobile Navigation Interactions
+  const menuToggle = document.getElementById('mobile-menu');
+  const navLinks = document.querySelector('.nav-links');
 
-menuToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
-});
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  }
 
-// Scroll Event Handler for Header Transitions
-window.addEventListener('scroll', () => {
-  const header = document.getElementById('header');
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
+  // Scroll Event Handler for Header Transitions
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('header');
+    if (header) {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+  });
+
+  // =========================================================
+  // UNIFIED REAL-TIME DATE, TIME & METRIC MODULES
+  // =========================================================
+  function updateClocks() {
+    const now = new Date();
+
+    // Update Dashboard Widgets
+    const dateEl = document.getElementById("liveDate");
+    const timeEl = document.getElementById("liveTime");
+    const zoneEl = document.getElementById("timezone");
+
+    if (dateEl) {
+      dateEl.innerHTML = now.toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      });
+    }
+    if (timeEl) {
+      timeEl.innerHTML = now.toLocaleTimeString("en-IN");
+    }
+    if (zoneEl) {
+      zoneEl.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+  }
+
+  // Initialize Clocks Immediately and Run Intervals Safely
+  updateClocks();
+  setInterval(updateClocks, 1000);
+
+  // =========================================================
+  // LIVE VISITOR COUNTER IMPLEMENTATION
+  // =========================================================
+  function showCounter(count) {
+    const visitorCountEl = document.getElementById("visitorCount");
+    if (visitorCountEl) {
+      visitorCountEl.innerHTML = count.toLocaleString();
+    }
+  }
+
+  const lastVisit = localStorage.getItem("lastVisit");
+  const nowTime = Date.now();
+
+  if (!lastVisit || nowTime - Number(lastVisit) > 24 * 60 * 60 * 1000) {
+    fetch("https://visitor-api.gourabna.workers.dev/")
+      .then(r => r.json())
+      .then(data => {
+        if(data && data.visitors) {
+          showCounter(data.visitors);
+          localStorage.setItem("lastVisit", nowTime);
+        }
+      })
+      .catch(err => console.log("Visitor tracker off-grid:", err));
   } else {
-    header.classList.remove('scrolled');
+    fetch("https://visitor-api.gourabna.workers.dev/?view=1")
+      .then(r => r.json())
+      .then(data => {
+        if(data && data.visitors) {
+          showCounter(data.visitors);
+        }
+      })
+      .catch(err => console.log("Visitor tracker off-grid:", err));
   }
 });
 </script>
